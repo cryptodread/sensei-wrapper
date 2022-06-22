@@ -1,21 +1,17 @@
-## Welcome to Lightning Terminal!
+## Welcome to Sensei!
 
-`Lightning Terminal` is a powerful web all-in-one interface that integrates Lightning Pool, Lightning Loop and Faraday.
+![Sensei Logo](./sensei/web-admin/public/images/sensei-logo.svg)
 
->
-> **Lightning Loop:** Make a Lightning transaction to an on-chain bitcoin address (Loop Out) or send on-chain bitcoin directly into a Lightning channel (Loop In). 
->
-> **Lightning Pool:** Marketplace for buying and selling channel liquidity. Lightning Terminal allows users to place their own asks and bids through the web browser.
->
-> **Faraday(SSH Required):** Data Reporting tool developed by Lightning Labs to help you extract valuable analytics and insights from your LND node. Please note that Faraday is command line only, and not supported by EmbassyOS.
+### **WARNING: This software is in beta. Please do not use it with a lot of funds.
 
-**To use the Faraday command line interface (frcli) you will need to ssh into your Embassy:**
+<br/>
 
-Usage: 
-- `docker exec lightning-terminal.embassy frcli --rpcserver=localhost:8443 "command"`
+Sensei is a new lightning node implementation with a focus on easing the onboarding experience for users new to Bitcoin. It is built using the [bitcoin development kit](https://bitcoindevkit.org) and the [lightning development kit](https://lightningdevkit.org).
 
-For help finding more Faraday commands, type 
-- `docker exec lightning-terminal.embassy frcli --rpcserver=localhost:8443 -help`
+## Documentation
 
+Please visit the [documentation website](https://docs.l2.technology) for installation and getting started instructions.
 
-### You may also reference the [Walkthrough](https://docs.lightning.engineering/lightning-network-tools/lightning-terminal/get-lit) document for additional guidance on how to use the product.
+## Community
+
+Please join [our discord community](https://discord.gg/bneS492Tqu) to discuss anything related to this project.

@@ -1,16 +1,16 @@
-id: lightning-terminal 
-title: Lightning Terminal
-version: 0.6.7
+id: sensei 
+title: Sensei
+version: 0.2.1
 release-notes: Initial version for EmbassyOS v0.3.0.3
 license: mit
-wrapper-repo: https://github.com/Start9Labs/lightning-terminal-wrapper
-upstream-repo: https://github.com/lightninglabs/lightning-terminal
-support-site: https://github.com/lightninglabs/lightning-terminal/issues
-marketing-site: https://lightning.engineering/
+wrapper-repo: https://github.com/Start9Labs/sensei-wrapper
+upstream-repo: https://github.com/L2-Technology/sensei
+support-site: https://github.com/L2-Technology/sensei/issues
+marketing-site: https://l2.technology/sensei
 build: ["make"]
 description:
-  short: Lightning Terminal - Your Home for Lightning Liquidity
-  long: Lightning Terminal (LiT) is a browser-based interface for managing channel liquidity
+  short: A lightning node implementation for everyone
+  long: A new lightning node implementation with a focus on easing the onboarding experience for users new to Bitcoin. It is built using the bitcoin development kit and the lightning development kit.
 assets:
   license: LICENSE
   icon: icon.png
@@ -29,7 +29,7 @@ main:
 health-checks:
   main:
     name: Web Interface
-    success-message: The Lightning Terminal UI is ready to visit in a web browser
+    success-message: The Sensei UI is ready to visit in a web browser
     type: docker
     image: main
     entrypoint: check-web.sh
@@ -59,7 +59,7 @@ config:
     args:
       - config
       - set
-      - lightning-terminal
+      - sensei
       - /root
       - /mnt/assets/config_rules.yaml
       - /mnt/assets/dependencies.yaml
@@ -93,28 +93,22 @@ volumes:
     readonly: false
 interfaces:
   main:
-    name: Lightning Terminal Web Interface
-    description: Specifies the LiT interface to listen on for HTTP connections.
+    name: Sensei Web Interface
+    description: Specifies the Sensei ports to listen on for HTTP connections.
     tor-config:
       port-mapping:
-        80: "8443"
+        80: "5401"
     lan-config:
       443:
         ssl: true
-        internal: 8443
+        internal: 5401
     ui: true
     protocols:
       - tcp
       - http
 dependencies:
-  lnd:
-    version: ">=0.13.3 <0.15.0"
-    description: Used to communicate with the Lightning Network.
-    requirement:
-      type: required
-    config: ~
   bitcoind:
-    version: ">=0.21.1.2 <=23.0.0"
+    version: ">=0.21.1.2 <24.0.0"
     requirement:
       type: "opt-out"
       how: Can alternatively configure proxy or bitcoin core  node.
@@ -128,7 +122,7 @@ dependencies:
         args:
           - dependency
           - check
-          - lightning-terminal
+          - sensei
           - bitcoind
           - /root
           - "/mnt/assets/bitcoind_config_rules.yaml"
@@ -144,7 +138,7 @@ dependencies:
         args:
           - dependency
           - "auto-configure"
-          - "lightning-terminal"
+          - "sensei"
           - bitcoind
           - /root
           - "/mnt/assets/bitcoind_config_rules.yaml"
@@ -167,7 +161,7 @@ dependencies:
         args:
           - dependency
           - check
-          - lightning-terminal
+          - sensei
           - "btc-rpc-proxy"
           - /root
           - "/mnt/assets/btc-rpc-proxy_config_rules.yaml"
@@ -183,7 +177,7 @@ dependencies:
         args:
           - dependency
           - "auto-configure"
-          - lightning-terminal
+          - sensei
           - "btc-rpc-proxy"
           - /root
           - "/mnt/assets/btc-rpc-proxy_config_rules.yaml"

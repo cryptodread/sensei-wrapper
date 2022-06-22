@@ -1,0 +1,3 @@
+[submodule "sensei"]
+	path = sensei
+	url = https://github.com/L2-Technology/sensei.git
