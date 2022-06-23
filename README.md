@@ -1,5 +1,14 @@
 # Wrapper for Sensei
 
+Under developmment, remaining items:
+- launch ui button should go to .local/admin/nodes (or .onion/admin/nodes)
+- API_HOST for sensei should be set correctly to use .onion
+- Username and Password should show in the properties page.
+- Confirm electrum server is no longer needed
+
+
+
+
 `Sensei` is a lightning node implementation for everyone . 
 This .s9pk wrapper will allow you to run Sensei on your Embassy.
 

@@ -1,21 +1,25 @@
 #!/bin/bash
+set -a
 
 _term() { 
   echo "Caught SIGTERM signal!" 
   kill -TERM "$sensei_process" 2>/dev/null
 }
 # Setting variables
-TOR_ADDRESS=$(yq e '.tor-address' /root/start9/config.yaml)
-LAN_ADDRESS=$(yq e '.lan-address' /root/start9/config.yaml)
-APP_PASS=$(yq e '.password' /root/start9/config.yaml)
-RPC_TYPE=$(yq e '.bitcoind.type' /root/start9/config.yaml)
-RPC_USER=$(yq e '.bitcoind.user' /root/start9/config.yaml)
-RPC_PASS=$(yq e '.bitcoind.password' /root/start9/config.yaml)
+export TOR_ADDRESS=$(yq e '.tor-address' /root/start9/config.yaml)
+export LAN_ADDRESS=$(yq e '.lan-address' /root/start9/config.yaml)
+export RPC_TYPE=$(yq e '.bitcoind.type' /root/start9/config.yaml)
+export NETWORK="bitcoin"
+export DATABASE_URL="sensei.db"
+# export API_HOST=$(yq e '.tor-address' /root/start9/config.yaml)
+export BITCOIND_RPC_USERNAME=$(yq e '.bitcoind.user' /root/start9/config.yaml)
+export BITCOIND_RPC_PORT=8332
+export BITCOIND_RPC_PASSWORD=$(yq e '.bitcoind.password' /root/start9/config.yaml)
 if [ "$RPC_TYPE" = "internal-proxy" ]; then
-	RPC_HOST="btc-rpc-proxy.embassy"
+	export BITCOIND_RPC_HOST="btc-rpc-proxy.embassy"
 	echo "Running on Bitcoin Proxy..."
 else
-	RPC_HOST="bitcoind.embassy"
+	export BITCOIND_RPC_HOST="bitcoind.embassy"
 	echo "Running on Bitcoin Core..."
 fi
 echo "Configuring Sensei..."
@@ -25,22 +29,14 @@ echo "Configuring Sensei..."
   echo 'data:' >> /root/start9/stats.yaml
   echo '  Password: ' >> /root/start9/stats.yaml
         echo '    type: string' >> /root/start9/stats.yaml
-        echo "    value: \"$APP_PASS\"" >> /root/start9/stats.yaml
+        echo "    value: ******** " >> /root/start9/stats.yaml
         echo '    description: This is your admin password for Sensei. Please use caution when sharing this password, you could lose your funds!' >> /root/start9/stats.yaml
         echo '    copyable: true' >> /root/start9/stats.yaml
         echo '    masked: true' >> /root/start9/stats.yaml
         echo '    qr: false' >> /root/start9/stats.yaml
 
 echo "Starting Sensei..."
-source $HOME/.cargo/env
-cargo run \
-    --bin senseid -- --network=mainnet \
-    --bitcoind-rpc-host=$RPC_HOST \
-    --bitcoind-rpc-port=8332 \
-    --bitcoind-rpc-username=$RPC_USER \
-    --bitcoind-rpc-password=$RPC_PASS \
-    --database-url=sensei.db
-
+./senseid 
 while true;
 do
 sleep 20000;

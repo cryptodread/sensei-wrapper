@@ -16,16 +16,6 @@ lan-address:
   package-id: sensei
   target: lan-address
   interface: main
-password:
-  type: string
-  name: Sensei Password
-  description: Administrator password for Sensei
-  nullable: false
-  copyable: true
-  masked: true
-  default:
-    charset: "a-z,A-Z,0-9"
-    len: 22
 bitcoind:
   type: union
   name: Bitcoin
